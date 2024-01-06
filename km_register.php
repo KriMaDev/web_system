@@ -6,9 +6,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["password"];
     $alias = $_POST["alias"];
 
-    // Validate user input to avoid SQL injection
-    $stmt = $pdo->prepare("INSERT INTO km_users (user, pass, alias) VALUES (?, ?, ?)");
-    
+    // Validate user input to avoid SQL injection and XSS
+    $username = htmlspecialchars($username, ENT_QUOTES, 'UTF-8');
+    $alias = htmlspecialchars($alias, ENT_QUOTES, 'UTF-8');
+
+    $stmt = $conn->prepare("INSERT INTO km_users (user, pass, alias) VALUES (?, ?, ?)");
+
     // Hash the password before storing it
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
@@ -19,11 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: km_login.php");
     exit();
 }
-
-$pdo = null;
 ?>
 
-<!-- The HTML registration form -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,5 +37,8 @@ $pdo = null;
         Alias: <input type="text" name="alias" required><br>
         <input type="submit" value="Register">
     </form>
+
+    <!-- Add a button to go to the login page -->
+    <p>Already have an account? <a href="km_login.php">Login</a></p>
 </body>
 </html>

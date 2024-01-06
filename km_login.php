@@ -7,8 +7,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-    // Use prepared statement to prevent SQL injection
-    $stmt = $pdo->prepare("SELECT id, user, pass FROM km_users WHERE user = ?");
+    // Validate user input to avoid SQL injection and XSS
+    $username = htmlspecialchars($username, ENT_QUOTES, 'UTF-8');
+
+    $stmt = $conn->prepare("SELECT id, user, pass FROM km_users WHERE user = ?");
     $stmt->execute([$username]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -22,8 +24,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Invalid username or password";
     }
 }
-
-$pdo = null;
 ?>
 
 <!DOCTYPE html>
@@ -38,5 +38,8 @@ $pdo = null;
         Password: <input type="password" name="password"><br>
         <input type="submit" value="Login">
     </form>
+
+    <!-- Add a button to go to the registration page -->
+    <p>Don't have an account? <a href="km_register.php">Register</a></p>
 </body>
 </html>

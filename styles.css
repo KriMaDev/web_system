@@ -1,0 +1,32 @@
+/* styles.css */
+.eye-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.eye {
+    width: 100px;
+    height: 60px;
+    background-color: #fff;
+    border: 2px solid #000;
+    position: relative;
+    border-radius: 50% 50% 0 0;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.pupil {
+    width: 30px;
+    height: 30px;
+    background-color: #000;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Centering buttons */
+.card-body {
+    text-align: center;
+}

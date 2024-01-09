@@ -76,6 +76,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- Your additional JavaScript files can be included here -->
     <script>
+        //===================================
+        //                       Eye controls
         document.addEventListener("DOMContentLoaded", function () {
             const eye = document.querySelector(".eye");
             document.addEventListener("mousemove", function (e) {
@@ -91,7 +93,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 eyePupil.style.transform = `translate(-50%, -50%) translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
             });
         });
-
+        
+        //===================================
+        //                Empty fields alerts
         function validateForm() {
             var username = document.forms[0]["username"].value;
             var password = document.forms[0]["password"].value;

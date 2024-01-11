@@ -1,4 +1,7 @@
 /* styles.css */
+body{
+    background-color: rgb(211, 208, 208);
+}
 .eye-container {
     text-align: center;
     margin-bottom: 20px;

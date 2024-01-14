@@ -1,1 +1,1 @@
-let there = "be peace.";
+let there = "be peace";

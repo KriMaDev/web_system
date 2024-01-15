@@ -11,7 +11,7 @@ body{
     width: 100px;
     height: 60px;
     background-color: #fff;
-    border: 2px solid #000;
+    border: 1px solid #070b0f;
     position: relative;
     border-radius: 50% 50% 0 0;
     overflow: hidden;
@@ -21,7 +21,8 @@ body{
 .pupil {
     width: 30px;
     height: 30px;
-    background-color: #000;
+    background-color: #0f99e9;
+    border: 1px solid #070b0f;
     border-radius: 50%;
     position: absolute;
     top: 50%;

@@ -2,18 +2,20 @@
 body{
     background-color: rgb(211, 208, 208);
 }
+
+/* Eyes */
 .eye-container {
     text-align: center;
     margin-bottom: 20px;
 }
 
 .eye {
-    width: 100px;
-    height: 60px;
+    width: 150px;
+    height: 80px;
     background-color: #fff;
     border: 1px solid #070b0f;
     position: relative;
-    border-radius: 50% 50% 0 0;
+    border-radius: 90% 90% 70% 90%;
     overflow: hidden;
     display: inline-block;
 }
@@ -30,7 +32,11 @@ body{
     transform: translate(-50%, -50%);
 }
 
-/* Centering buttons */
+/* Form */
 .card-body {
     text-align: center;
+}
+
+.card {
+    border-radius: 15%;
 }

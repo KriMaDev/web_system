@@ -22,16 +22,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
 <head>
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
+    <link rel="stylesheet" href="styles.css"> 
     <title>Dashboard</title>
 </head>
 <body>
-    <h2>Welcome to the Dashboard</h2>
-    <!-- Your dashboard content here -->
+    <div class="wholeDash">
+        <h2>Welcome to the Dashboard</h2>
+        <!-- Your dashboard content here -->
 
-    <!-- Logout Form -->
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-        <input type="submit" value="Logout">
-    </form>
+        <!-- Logout Form -->
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+            <input type="submit" value="Logout">
+        </form>
+    </div>
 </body>
 </html>

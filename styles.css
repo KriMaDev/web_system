@@ -3,6 +3,15 @@ body{
     background-color: rgb(211, 208, 208);
 }
 
+/* ===== DASHBOARD ===== */
+.wholeDash {
+    align-content: center;
+    text-align: center;
+}
+
+
+/* ===== LOGIN & REGISTER ===== */
+
 /* Eyes */
 .eye-container {
     text-align: center;
@@ -32,7 +41,7 @@ body{
     transform: translate(-50%, -50%);
 }
 
-/* Form */
+/* Body */
 .card-body {
     text-align: center;
 }

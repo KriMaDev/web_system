@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="wholeDash">
         <h2>Welcome to the Dashboard</h2>
-        <!-- Your dashboard content here -->
+       
 
         <!-- Logout Form -->
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">

@@ -5,8 +5,8 @@ body{
 
 /* ===== DASHBOARD ===== */
 .wholeDash {
-    align-content: center;
-    text-align: center;
+    display: grid;
+    justify-items: center;
 }
 
 

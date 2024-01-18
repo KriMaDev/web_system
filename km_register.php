@@ -100,19 +100,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             var alias = document.forms[0]["alias"].value;
 
             // Your validation logic goes here
-            if (username === "") {
-                alert("Please enter a valid username.");
+            if (username === "" || password === "" || alias === "") {
+                alert("Please fill all fields.");
                 return false;
             }
-            if (password === "") {
-                alert("Please enter a valid password.");
-                return false;
-            }
-            if (alias === "") {
-                alert("Please enter a valid alias.");
-                return false;
-            }
-
             // Additional validation logic can be added as needed
 
             return true; // Submit the form

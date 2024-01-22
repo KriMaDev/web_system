@@ -29,6 +29,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="wholeDash">
         <h2>Welcome to the Dashboard</h2>
+        <div id="headerDash"></div>
+        <div id="bodyDash"></div>
        
 
         <!-- Logout Form -->

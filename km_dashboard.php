@@ -30,7 +30,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="wholeDash">
         <h2>Welcome to the Dashboard</h2>
         <div id="headerDash"></div>
-        <div id="bodyDash"></div>
+        <div id="bodyDash">
+            <div id="mainDash">
+                <div id="mainFirstDash"></div>
+                <div id="mainSecondDash"></div>
+            </div>
+            <div id="navDash"></div>
+        </div>
        
 
         <!-- Logout Form -->

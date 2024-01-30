@@ -37,6 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div id="navDash"></div>
         </div>
+        <div id="footerDash"></div>
        
 
         <!-- Logout Form -->

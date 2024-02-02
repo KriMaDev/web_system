@@ -32,6 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div id="headerDash"></div>
         <div id="bodyDash">
             <div id="mainDash">
+                <div id="mainHeadDash"></div>
                 <div id="mainFirstDash"></div>
                 <div id="mainSecondDash"></div>
             </div>

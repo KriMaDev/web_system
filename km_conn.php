@@ -2,10 +2,10 @@
 //========================================================================================
 //  DATABASE CONNECTION 
 //========================================================================================
-    $host 			= "localhost";    // Database host
-    $username		= "root";         // Database username
-    $password 		= "";             // Database password
-    $database 		= "krima_rep";    // Database name
+    $host 			= "localhost";          // Database host
+    $username		= "root";               // Database username
+    $password 		= "";                   // Database password
+    $database 		= "git_private_rep";    // Database name
     
     try {
         $pdo       = new PDO("mysql:host=$host;dbname=$database;charset=utf8", $username, $password);

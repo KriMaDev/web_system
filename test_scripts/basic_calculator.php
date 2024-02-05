@@ -9,6 +9,7 @@
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 50px;
+            background-color: rgb(45, 45, 45);
         }
 
         form {

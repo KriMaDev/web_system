@@ -29,10 +29,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="wholeDash">
         <h2>Welcome to the Dashboard</h2>
-        <div id ="headerDash"></div>
+        <div id ="headerDash">
+            <pre>
+                Here you can find and use all of the available tools built in the system.
+                Remember that this page is still under development!
+                Thats why they might be a bit crappy...
+            </pre>
+        </div>
         <div id="bodyDash">
             <div id="mainDash">
-                <div id="mainHeadDash"></div>
+                <div id="mainHeadDash">
+                    <a href="/test-rep/test_scripts/calculator.html">
+                        <button>Calculator</button>
+                    </a>
+                    <a href="/test-rep/test_scripts/basic_calculator.php">
+                        <button>Basic Calculator</button>
+                    </a> 
+                </div>
                 <div id="mainFirstDash"></div>
                 <div id="mainSecondDash"></div>
             </div>

@@ -22,14 +22,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
 <head>
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css"> 
     <title>Dashboard</title>
 </head>
 <body>
     <div class="wholeDash">
         <h2>Welcome to the Dashboard</h2>
-        <div id="headerDash"></div>
+        <div class=".container-fluid bg-dark text-white"></div>
         <div id="bodyDash">
             <div id="mainDash">
                 <div id="mainHeadDash"></div>

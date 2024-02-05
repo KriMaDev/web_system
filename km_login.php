@@ -101,8 +101,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             var password = document.forms[0]["password"].value;
 
             // Your validation logic goes here
-            if (username === "" || password === "") {
-                alert("Please enter a valid credentials.");
+            if (username === "") {
+                alert("Please enter a valid username.");
+                return false;
+            }
+
+            if (password === "") {
+                alert("Please enter a valid password.");
                 return false;
             }
             // Additional validation logic can be added as needed

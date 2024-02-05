@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        .calculator {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            max-width: 300px;
+            margin: auto;
+        }
+
+        .calculator input {
+            grid-column: span 4;
+            font-size: 18px;
+            padding: 10px;
+            text-align: right;
+        }
+
+        .calculator button {
+            font-size: 16px;
+            padding: 10px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            background-color: #f4f4f4;
+        }
+
+        .calculator button.operator {
+            background-color: #ff9800;
+            color: white;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculator">
+        <input type="text" id="result" readonly>
+        <button>(</button>
+        <button>)</button>
+        <button>C</button>
+        <button class="operator">⌫</button>
+        <button>7</button>
+        <button>8</button>
+        <button>9</button>
+        <button class="operator">/</button>
+        <button>4</button>
+        <button>5</button>
+        <button>6</button>
+        <button class="operator">*</button>
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button class="operator">-</button>
+        <button>0</button>
+        <button>.</button>
+        <button class="operator">=</button>
+        <button class="operator">+</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const result = document.getElementById('result');
+            const buttons = document.querySelectorAll('.calculator button');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    if (button.textContent === '=') {
+                        result.value = eval(result.value);
+                    } else if (button.textContent === 'C') {
+                        result.value = '';
+                    } else if (button.textContent === '⌫') {
+                        result.value = result.value.slice(0, -1);
+                    } else {
+                        result.value += button.textContent;
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

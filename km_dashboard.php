@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="wholeDash">
         <h2>Welcome to the Dashboard</h2>
-        <div class=".container-fluid bg-dark text-white"></div>
+        <div id ="headerDash"></div>
         <div id="bodyDash">
             <div id="mainDash">
                 <div id="mainHeadDash"></div>

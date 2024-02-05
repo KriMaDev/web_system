@@ -1,6 +1,6 @@
 /* styles.css */
-body{
-    background-color: rgb(211, 208, 208);
+body {
+    background-color: rgb(79, 78, 78);
 }
 
 /* ===== DASHBOARD ===== */
@@ -48,4 +48,5 @@ body{
 
 .card {
     border-radius: 17%;
+    box-shadow: #070b0f;
 }

@@ -8,6 +8,7 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
+            color: white;
             margin: 50px;
             background-color: rgb(45, 45, 45);
         }

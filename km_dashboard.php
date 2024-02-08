@@ -40,10 +40,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div id="mainDash">
                 <div id="mainHeadDash">
                     <a href="/test-rep/test_scripts/calculator.html">
-                        <button>Calculator</button>
+                        <h3>Calculator</h3>
                     </a>
                     <a href="/test-rep/test_scripts/basic_calculator.php">
-                        <button>Basic Calculator</button>
+                        <h3>Basic Calculator</h3>
                     </a> 
                 </div>
                 <div id="mainFirstDash"></div>

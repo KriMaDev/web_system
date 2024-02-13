@@ -1,5 +1,7 @@
 # test-rep
-Test repository for learning github &amp; git 
+Test repository for learning GiHub &amp; Git. 
+Created 28/12/2023
+@Author KriMaDev
 
 A simple system that will contain after work projects I will be work on.
 Possible languages to be expected are :

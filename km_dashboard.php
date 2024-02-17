@@ -39,6 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div id="bodyDash">
             <div id="mainDash">
                 <div id="mainHeadDash">
+                    <!-- Header menu to useful projects -->
                     <a href="/test-rep/test_scripts/calculator.html">
                         <h3>Calculator</h3>
                     </a>

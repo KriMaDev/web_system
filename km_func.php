@@ -2,6 +2,8 @@
 // ======================================================
 //                                 Functions Library File
 // ======================================================
+
+
 function greekToEnglishChars($filestr)
     {
         $filestr = trim($filestr);

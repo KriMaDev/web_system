@@ -51,11 +51,11 @@ function greekToEnglishChars($filestr)
         $filestr = str_replace("_",   "",  $filestr);  // Remove '_' char
         $filestr = str_replace("--",  "-", $filestr);  // Replace '--' char
         $filestr = str_replace("---", "-", $filestr);  // Replace '---' char
-        $filestr = str_replace("«", "", $filestr);     // Remove '«' char
-        $filestr = str_replace("»", "", $filestr);     // Remove '»' char
-        $filestr = str_replace("”", "", $filestr);     // Remove '”' char
-        $filestr = str_replace("“", "", $filestr);     // Remove '“' char
-        $filestr = str_replace("΄", "", $filestr);     // Remove '΄' char
+        $filestr = str_replace("«", "",    $filestr);     // Remove '«' char
+        $filestr = str_replace("»", "",    $filestr);     // Remove '»' char
+        $filestr = str_replace("”", "",    $filestr);     // Remove '”' char
+        $filestr = str_replace("“", "",    $filestr);     // Remove '“' char
+        $filestr = str_replace("΄", "",    $filestr);     // Remove '΄' char
         
         return strtolower($filestr);			
     }  // End of Function

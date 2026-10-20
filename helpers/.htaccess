@@ -1,0 +1,2 @@
+# Internal files (e.g. the SQL schema) must never be served over HTTP
+Require all denied

@@ -1,0 +1,88 @@
+# =========================================================
+#  Secrets & local configuration (never commit these)
+# =========================================================
+config.php
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+auth.json
+.htpasswd
+
+# =========================================================
+#  Database dumps & backups (only the schema file is tracked)
+# =========================================================
+*.sql
+!helpers/database/krima_rep.sql
+*.sql.gz
+*.sqlite
+*.sqlite3
+*.db
+*.bak
+*.backup
+*.dump
+
+# =========================================================
+#  Logs, caches, temp & session files
+# =========================================================
+*.log
+logs/
+log/
+tmp/
+temp/
+cache/
+sessions/
+*.tmp
+*.swp
+*.swo
+*~
+
+# =========================================================
+#  Dependencies (install them, don't commit them)
+# =========================================================
+vendor/
+node_modules/
+
+# =========================================================
+#  Tooling caches
+# =========================================================
+.phpunit.result.cache
+.phpunit.cache/
+.php-cs-fixer.cache
+.phpstan.cache/
+coverage/
+
+# =========================================================
+#  Docker local overrides
+# =========================================================
+docker-compose.override.yml
+compose.override.yml
+
+# =========================================================
+#  IDE / editor
+# =========================================================
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.code-workspace
+.fleet/
+.history/
+*.sublime-project
+*.sublime-workspace
+nbproject/
+
+# =========================================================
+#  OS files
+# =========================================================
+.DS_Store
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/

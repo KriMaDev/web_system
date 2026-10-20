@@ -21,6 +21,8 @@ $isLoggedIn = isset($_SESSION['user_id']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= e($pageTitle) ?> · Web System</title>
+    <!-- Applies the saved/system theme before the page is painted (no flash) -->
+    <script src="<?= e($assetBase) ?>assets/js/theme.js"></script>
     <!-- Bootstrap CSS & Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -35,6 +37,11 @@ $isLoggedIn = isset($_SESSION['user_id']);
                 <i class="bi bi-grid-1x2-fill text-primary me-2"></i>Web System
             </a>
             <div class="d-flex align-items-center gap-2">
+                <button type="button" class="btn btn-sm btn-outline-secondary theme-toggle" data-theme-toggle
+                        title="Toggle dark/light mode" aria-label="Toggle dark/light mode">
+                    <i class="bi bi-moon-stars-fill theme-icon-to-dark"></i>
+                    <i class="bi bi-sun-fill theme-icon-to-light"></i>
+                </button>
                 <?php if ($isLoggedIn): ?>
                     <span class="navbar-text small d-none d-sm-inline">
                         <i class="bi bi-person-circle me-1"></i><?= e($_SESSION['alias'] ?? '') ?>

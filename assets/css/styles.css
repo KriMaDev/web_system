@@ -9,6 +9,12 @@ body {
     background-color: var(--bs-body-bg);
 }
 
+/* Theme toggle: show the moon in light mode, the sun in dark mode */
+[data-bs-theme="light"] .theme-icon-to-light,
+[data-bs-theme="dark"] .theme-icon-to-dark {
+    display: none;
+}
+
 .back-link {
     display: inline-block;
     margin-bottom: 1.5rem;

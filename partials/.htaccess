@@ -1,0 +1,2 @@
+# Page fragments are only included by PHP, never requested directly
+Require all denied

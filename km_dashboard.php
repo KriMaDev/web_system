@@ -35,68 +35,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $alias = $_SESSION['alias'] ?? '';
+
+// Tools shown on the dashboard: one card each
+$tools = [
+    [
+        'title' => 'Calculator',
+        'href'  => 'test_scripts/calculator.php',
+        'icon'  => 'bi-calculator',
+        'tech'  => 'JavaScript',
+        'text'  => 'Button and keyboard calculator that runs in the browser, with a small expression parser instead of eval().',
+    ],
+    [
+        'title' => 'Basic Calculator',
+        'href'  => 'test_scripts/basic_calculator.php',
+        'icon'  => 'bi-plus-slash-minus',
+        'tech'  => 'PHP',
+        'text'  => 'Form-based calculator processed on the server, with input validation and escaped output.',
+    ],
+];
+
+$pageTitle = 'Dashboard';
+require __DIR__ . '/partials/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <nav class="navbar navbar-dark bg-dark shadow-sm">
-        <div class="container">
-            <span class="navbar-brand fw-semibold">Web System</span>
-            <!-- Logout Form -->
-            <form method="post" action="" class="m-0">
-                <?= csrf_field() ?>
-                <button type="submit" class="btn btn-outline-light btn-sm">Logout</button>
-            </form>
-        </div>
-    </nav>
+        <div class="container py-5">
+            <header class="dashboard-hero mb-5">
+                <h1 class="display-6 fw-semibold mb-2">Welcome<?= $alias !== '' ? ', ' . e($alias) : '' ?></h1>
+                <p class="lead text-body-secondary mb-0">Pick a tool below to get started.</p>
+            </header>
 
-    <main class="container py-5">
-        <header class="mb-4 text-light">
-            <h1 class="h2">Welcome<?= $alias !== '' ? ', ' . e($alias) : '' ?></h1>
-            <p class="text-white-50 mb-0">Pick a tool below to get started.</p>
-        </header>
-
-        <div class="row g-4">
-            <div class="col-md-6">
-                <div class="card tool-card h-100 shadow">
-                    <div class="card-body d-flex flex-column">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <h2 class="h5 card-title mb-0">Calculator</h2>
-                            <span class="badge text-bg-warning">JavaScript</span>
-                        </div>
-                        <p class="card-text text-body-secondary">
-                            Button-based calculator that runs in the browser. Handles parentheses and
-                            operator precedence with a small expression parser instead of <code>eval()</code>.
-                        </p>
-                        <a href="test_scripts/calculator.html" class="btn btn-primary mt-auto align-self-start">Open Calculator</a>
+            <div class="row g-4">
+                <?php foreach ($tools as $tool): ?>
+                    <div class="col-md-6 col-xl-4">
+                        <a href="<?= e($tool['href']) ?>" class="card tool-card h-100 text-decoration-none">
+                            <div class="card-body d-flex flex-column">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <span class="tool-icon"><i class="bi <?= e($tool['icon']) ?>"></i></span>
+                                    <span class="badge rounded-pill text-bg-light border"><?= e($tool['tech']) ?></span>
+                                </div>
+                                <h2 class="h5 card-title"><?= e($tool['title']) ?></h2>
+                                <p class="card-text text-body-secondary"><?= e($tool['text']) ?></p>
+                                <span class="mt-auto fw-semibold text-primary">Open <i class="bi bi-arrow-right"></i></span>
+                            </div>
+                        </a>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card tool-card h-100 shadow">
-                    <div class="card-body d-flex flex-column">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <h2 class="h5 card-title mb-0">Basic Calculator</h2>
-                            <span class="badge text-bg-info">PHP</span>
-                        </div>
-                        <p class="card-text text-body-secondary">
-                            Form-based calculator processed on the server, with input validation
-                            and escaped output.
-                        </p>
-                        <a href="test_scripts/basic_calculator.php" class="btn btn-primary mt-auto align-self-start">Open Basic Calculator</a>
-                    </div>
-                </div>
+                <?php endforeach; ?>
             </div>
         </div>
-    </main>
-</body>
-</html>
+<?php require __DIR__ . '/partials/footer.php'; ?>

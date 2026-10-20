@@ -51,77 +51,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $notice = isset($_GET['registered']) ? 'Account created. You can now log in.' : '';
+
+$pageTitle   = 'Log in';
+$pageScripts = ['assets/js/eye.js'];
+require __DIR__ . '/partials/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!-- Your additional styles -->
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card auth-card">
-                    <div class="card-body">
-                        <div class="eye-container">
-                            <div class="eye">
-                                <div class="pupil"></div>
-                            </div>
+        <div class="container py-5">
+            <div class="card auth-card mx-auto">
+                <div class="card-body">
+                    <div class="eye-container" aria-hidden="true">
+                        <div class="eye">
+                            <div class="pupil"></div>
                         </div>
-                        <h2 class="card-title">Login</h2>
-                        <?php if ($notice !== ''): ?>
-                            <div class="alert alert-success" role="alert"><?= e($notice) ?></div>
-                        <?php endif; ?>
-                        <?php if ($error !== ''): ?>
-                            <div class="alert alert-danger" role="alert"><?= e($error) ?></div>
-                        <?php endif; ?>
-                        <form method="post" action="">
-                            <?= csrf_field() ?>
-                            <div class="mb-3">
-                                <label for="username" class="form-label">Username:</label>
-                                <input type="text" class="form-control" id="username" name="username"
-                                       value="<?= e($username) ?>" autocomplete="username" required autofocus>
-                            </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password:</label>
-                                <input type="password" class="form-control" id="password" name="password"
-                                       autocomplete="current-password" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Login</button>
-                        </form>
-                        <p class="mt-3">Don't have an account? <a href="km_register.php">Register</a></p>
                     </div>
+                    <h1 class="h3 card-title mb-1">Welcome back</h1>
+                    <p class="text-body-secondary mb-4">Log in to open your tools dashboard.</p>
+                    <?php if ($notice !== ''): ?>
+                        <div class="alert alert-success" role="alert"><?= e($notice) ?></div>
+                    <?php endif; ?>
+                    <?php if ($error !== ''): ?>
+                        <div class="alert alert-danger" role="alert"><?= e($error) ?></div>
+                    <?php endif; ?>
+                    <form method="post" action="" class="text-start">
+                        <?= csrf_field() ?>
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username"
+                                   value="<?= e($username) ?>" autocomplete="username" required autofocus>
+                        </div>
+                        <div class="mb-4">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password"
+                                   autocomplete="current-password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="bi bi-box-arrow-in-right me-1"></i>Log in
+                        </button>
+                    </form>
+                    <p class="mt-4 mb-0 small">Don't have an account? <a href="km_register.php">Register</a></p>
                 </div>
             </div>
         </div>
-    </div>
-    <script>
-        //===================================
-        //                       Eye controls
-        document.addEventListener("DOMContentLoaded", function () {
-            const eye = document.querySelector(".eye");
-            document.addEventListener("mousemove", function (e) {
-                const { clientX: mouseX, clientY: mouseY } = e;
-                const eyeRect = eye.getBoundingClientRect();
-                const eyeX = eyeRect.left + eyeRect.width / 2;
-                const eyeY = eyeRect.top + eyeRect.height / 2;
-                const deltaX = mouseX - eyeX;
-                const deltaY = mouseY - eyeY;
-                const angle = Math.atan2(deltaY, deltaX);
-                const distance = Math.min(eyeRect.width, eyeRect.height) / 4;
-                const eyePupil = eye.querySelector(".pupil");
-                eyePupil.style.transform = `translate(-50%, -50%) translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
-            });
-        });
-    </script>
-</body>
-</html>
-
-
+<?php require __DIR__ . '/partials/footer.php'; ?>

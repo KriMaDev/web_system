@@ -75,14 +75,85 @@
     </div>
 
     <script>
+        //===================================
+        //   Safe arithmetic evaluator (no eval)
+        //   Grammar:
+        //     expression = term   (('+' | '-') term)*
+        //     term       = unary  (('*' | '/') unary)*
+        //     unary      = ('+' | '-') unary | power
+        //     power      = primary ('**' unary)?        (right-associative)
+        //     primary    = number | '(' expression ')'
+        function evaluate(expression) {
+            const NUMBER = /^(\d+\.?\d*|\.\d+)$/;
+            const tokens = expression.match(/\d+\.?\d*|\.\d+|\*\*|[-+*/()]|\S/g) || [];
+            let pos = 0;
+
+            const peek = () => tokens[pos];
+            const next = () => tokens[pos++];
+
+            function parseExpression() {
+                let value = parseTerm();
+                while (peek() === '+' || peek() === '-') {
+                    value = next() === '+' ? value + parseTerm() : value - parseTerm();
+                }
+                return value;
+            }
+
+            function parseTerm() {
+                let value = parseUnary();
+                while (peek() === '*' || peek() === '/') {
+                    value = next() === '*' ? value * parseUnary() : value / parseUnary();
+                }
+                return value;
+            }
+
+            function parseUnary() {
+                if (peek() === '-') { next(); return -parseUnary(); }
+                if (peek() === '+') { next(); return parseUnary(); }
+                return parsePower();
+            }
+
+            function parsePower() {
+                const base = parsePrimary();
+                if (peek() === '**') { next(); return base ** parseUnary(); }
+                return base;
+            }
+
+            function parsePrimary() {
+                const token = next();
+                if (token === '(') {
+                    const value = parseExpression();
+                    if (next() !== ')') throw new SyntaxError('Missing closing parenthesis');
+                    return value;
+                }
+                if (token !== undefined && NUMBER.test(token)) return parseFloat(token);
+                throw new SyntaxError('Unexpected input');
+            }
+
+            const value = parseExpression();
+            if (pos < tokens.length) throw new SyntaxError('Unexpected input');
+            return value;
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
             const result = document.getElementById('result');
             const buttons = document.querySelectorAll('.calculator button');
 
             buttons.forEach(button => {
                 button.addEventListener('click', () => {
+                    // Start fresh after an error message
+                    if (result.value === 'Error') {
+                        result.value = '';
+                    }
+
                     if (button.textContent === '=') {
-                        result.value = eval(result.value);
+                        if (result.value.trim() !== '') {
+                            try {
+                                result.value = evaluate(result.value);
+                            } catch (e) {
+                                result.value = 'Error';
+                            }
+                        }
                     } else if (button.textContent === 'C') {
                         result.value = '';
                     } else if (button.textContent === '⌫') {

@@ -115,59 +115,55 @@ function post_string(string $key, bool $trim = true): string
 }
 
 
-function greekToEnglishChars($filestr)
-    {
-        $filestr = trim($filestr);
-        // Replace Greek Letters
-        $greek   = array('α','ά','Ά','Α','β','Β','γ', 'Γ', 'δ','Δ','ε','έ','Ε','Έ','ζ','Ζ','η','ή','Η','θ','Θ','ι','ί','ϊ','ΐ','Ι','Ί', 'κ','Κ','λ','Λ','μ','Μ','ν','Ν','ξ','Ξ','ο','ό','Ο','Ό','π','Π','ρ','Ρ','σ','ς', 'Σ','τ','Τ','υ','ύ','Υ','Ύ','φ','Φ','χ','Χ','ψ','Ψ','ω','ώ','Ω','Ώ',"'","'",','); 
-        $english = array('a', 'a','A','A','b','B','g','G','d','D','e','e','E','E','z','Z','i','i','I','th','Th', 'i','i','i','i','I','I','k','K','l','L','m','M','n','N','x','X','o','o','O','O','p','P' ,'r','R','s','s','S','t','T','y','y','Y','Y','f','F','ch','Ch','ps','Ps','o','o','O','O','_','_','_'); 
-        $filestr = str_replace($greek, $english, $filestr);
-        
-        // Change or Remove Special Chars
-        $filestr = str_replace(" - ", "-", $filestr);  // Change chars to '-'
-        $filestr = str_replace(" -",  "-", $filestr);  // Change chars to '-'
-        $filestr = str_replace("- ",  "-", $filestr);  // Change chars to '-'
-        $filestr = str_replace(" ",   "-", $filestr);  // Change space char to '-'
-        $filestr = str_replace("\\",  "-", $filestr);  // Change '\' char to '-'
-        $filestr = str_replace("/",   "-", $filestr);  // Change '\' char to '-'
-        $filestr = str_replace(".",   "",  $filestr);  // Remove '.' char
-        $filestr = str_replace(",",   "",  $filestr);  // Remove ',' char
-        $filestr = str_replace("'",   "",  $filestr);  // Remove ' char
-        $filestr = str_replace("!",   "",  $filestr);  // Remove '!' char
-        $filestr = str_replace("~",   "",  $filestr);  // Remove '~' char
-        $filestr = str_replace("`",   "",  $filestr);  // Remove '`' char
-        $filestr = str_replace("!",   "",  $filestr);  // Remove '!' char
-        $filestr = str_replace("@",   "",  $filestr);  // Remove '@' char
-        $filestr = str_replace("#",   "",  $filestr);  // Remove '#' char
-        $filestr = str_replace("$",   "",  $filestr);  // Remove '$' char
-        $filestr = str_replace("%",   "",  $filestr);  // Remove '%' char
-        $filestr = str_replace("^",   "",  $filestr);  // Remove '^' char
-        $filestr = str_replace("&",   "",  $filestr);  // Remove '&' char
-        $filestr = str_replace("*",   "",  $filestr);  // Remove '*' char
-        $filestr = str_replace("(",   "",  $filestr);  // Remove '(' char
-        $filestr = str_replace(")",   "",  $filestr);  // Remove ')' char
-        $filestr = str_replace("+",   "",  $filestr);  // Remove '+' char
-        $filestr = str_replace(":",   "",  $filestr);  // Remove ':' char
-        $filestr = str_replace("[",   "",  $filestr);  // Remove '[' char
-        $filestr = str_replace("]",   "",  $filestr);  // Remove ']' char
-        $filestr = str_replace("{",   "",  $filestr);  // Remove '{' char
-        $filestr = str_replace("}",   "",  $filestr);  // Remove '}' char
-        $filestr = str_replace(";",   "",  $filestr);  // Remove ';' char
-        $filestr = str_replace("\"",  "",  $filestr);  // Remove '"' char
-        $filestr = str_replace("|",   "",  $filestr);  // Remove '|' char
-        $filestr = str_replace("<",   "",  $filestr);  // Remove '<' char
-        $filestr = str_replace(">",   "",  $filestr);  // Remove '>' char
-        $filestr = str_replace("?",   "",  $filestr);  // Remove '?' char
-        $filestr = str_replace("=",   "",  $filestr);  // Remove '=' char
-        $filestr = str_replace("_",   "",  $filestr);  // Remove '_' char
-        $filestr = str_replace("--",  "-", $filestr);  // Replace '--' char
-        $filestr = str_replace("---", "-", $filestr);  // Replace '---' char
-        $filestr = str_replace("«", "",    $filestr);     // Remove '«' char
-        $filestr = str_replace("»", "",    $filestr);     // Remove '»' char
-        $filestr = str_replace("”", "",    $filestr);     // Remove '”' char
-        $filestr = str_replace("“", "",    $filestr);     // Remove '“' char
-        $filestr = str_replace("΄", "",    $filestr);     // Remove '΄' char
-        
-        return strtolower($filestr);			
-    }  // End of Function
-?>
+// ------------------------------------------------------
+//  Text helpers
+// ------------------------------------------------------
+
+/**
+ * Transliterate (Greek) text into a lowercase, URL/filename-friendly slug.
+ *
+ * Greek letters are mapped to Latin equivalents (e.g. "θ" => "th"), whitespace
+ * and slashes become hyphens, every other character outside [a-z0-9-] is
+ * removed and repeated hyphens are collapsed.
+ *
+ * Example: greekToEnglishChars('Καλημέρα Κόσμε!') returns 'kalimera-kosme'.
+ *
+ * @param  string $text UTF-8 input text.
+ * @return string       Lowercase ASCII slug.
+ */
+function greekToEnglishChars(string $text): string
+{
+    static $map = [
+        'α' => 'a',  'ά' => 'a',  'Α' => 'A',  'Ά' => 'A',
+        'β' => 'b',  'Β' => 'B',
+        'γ' => 'g',  'Γ' => 'G',
+        'δ' => 'd',  'Δ' => 'D',
+        'ε' => 'e',  'έ' => 'e',  'Ε' => 'E',  'Έ' => 'E',
+        'ζ' => 'z',  'Ζ' => 'Z',
+        'η' => 'i',  'ή' => 'i',  'Η' => 'I',  'Ή' => 'I',
+        'θ' => 'th', 'Θ' => 'Th',
+        'ι' => 'i',  'ί' => 'i',  'ϊ' => 'i',  'ΐ' => 'i',  'Ι' => 'I',  'Ί' => 'I',  'Ϊ' => 'I',
+        'κ' => 'k',  'Κ' => 'K',
+        'λ' => 'l',  'Λ' => 'L',
+        'μ' => 'm',  'Μ' => 'M',
+        'ν' => 'n',  'Ν' => 'N',
+        'ξ' => 'x',  'Ξ' => 'X',
+        'ο' => 'o',  'ό' => 'o',  'Ο' => 'O',  'Ό' => 'O',
+        'π' => 'p',  'Π' => 'P',
+        'ρ' => 'r',  'Ρ' => 'R',
+        'σ' => 's',  'ς' => 's',  'Σ' => 'S',
+        'τ' => 't',  'Τ' => 'T',
+        'υ' => 'y',  'ύ' => 'y',  'ϋ' => 'y',  'ΰ' => 'y',  'Υ' => 'Y',  'Ύ' => 'Y',  'Ϋ' => 'Y',
+        'φ' => 'f',  'Φ' => 'F',
+        'χ' => 'ch', 'Χ' => 'Ch',
+        'ψ' => 'ps', 'Ψ' => 'Ps',
+        'ω' => 'o',  'ώ' => 'o',  'Ω' => 'O',  'Ώ' => 'O',
+    ];
+
+    $slug = strtr(trim($text), $map);
+    $slug = preg_replace('~[\s/\\\\]+~u', '-', $slug) ?? '';    // whitespace and slashes -> '-'
+    $slug = preg_replace('~[^A-Za-z0-9-]+~', '', $slug);        // drop everything else
+    $slug = preg_replace('~-{2,}~', '-', $slug);                // collapse repeated '-'
+
+    return strtolower(trim($slug, '-'));
+}

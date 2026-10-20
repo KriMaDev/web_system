@@ -48,7 +48,8 @@ CREATE TABLE `km_users` (
 -- Indexes for table `km_users`
 --
 ALTER TABLE `km_users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uniq_km_users_user` (`user`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -58,7 +59,7 @@ ALTER TABLE `km_users`
 -- AUTO_INCREMENT for table `km_users`
 --
 ALTER TABLE `km_users`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'user id', AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'user id', AUTO_INCREMENT=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,0 +1,9 @@
+# Files used inside Linux containers always use LF, even on Windows checkouts
+Dockerfile          text eol=lf
+*.yml               text eol=lf
+*.yaml              text eol=lf
+*.sh                text eol=lf
+*.sql               text eol=lf
+.htaccess           text eol=lf
+.dockerignore       text eol=lf
+.env.example        text eol=lf

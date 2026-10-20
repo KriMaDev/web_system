@@ -1,19 +1,36 @@
 <?php
-session_start();
+require_once __DIR__ . '/km_func.php';
+
+send_security_headers();
+start_secure_session();
 
 // Check if the user is not logged in, redirect to login page
-if (!isset($_SESSION["user_id"])) {
-    header("Location: km_login.php");
+if (!isset($_SESSION['user_id'])) {
+    header('Location: km_login.php');
     exit();
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Perform any additional logout actions if needed
-    // ...
+// Logout (POST only, CSRF-protected)
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!csrf_verify()) {
+        header('Location: km_dashboard.php');
+        exit();
+    }
 
-    // Destroy the session and redirect to the login page
+    // Clear the session data, expire the cookie and destroy the session
+    $_SESSION = [];
+    $cookie   = session_get_cookie_params();
+    setcookie(session_name(), '', [
+        'expires'  => time() - 3600,
+        'path'     => $cookie['path'],
+        'domain'   => $cookie['domain'],
+        'secure'   => $cookie['secure'],
+        'httponly' => $cookie['httponly'],
+        'samesite' => $cookie['samesite'],
+    ]);
     session_destroy();
-    header("Location: km_login.php");
+
+    header('Location: km_login.php');
     exit();
 }
 ?>
@@ -56,7 +73,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
        
 
         <!-- Logout Form -->
-        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+        <form method="post" action="">
+            <?= csrf_field() ?>
             <input type="submit" value="Logout">
         </form>
     </div>

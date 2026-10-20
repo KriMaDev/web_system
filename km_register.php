@@ -1,26 +1,62 @@
 <?php
-require_once("km_conn.php");
+require_once __DIR__ . '/km_conn.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST["username"];
-    $password = $_POST["password"];
-    $alias    = $_POST["alias"];
+send_security_headers();
+start_secure_session();
 
-    // Validate user input to avoid SQL injection and XSS
-    $username = htmlspecialchars($username, ENT_QUOTES, 'UTF-8');
-    $alias    = htmlspecialchars($alias, ENT_QUOTES, 'UTF-8');
-
-    $stmt     = $pdo->prepare("INSERT INTO km_users (user, pass, alias) VALUES (?, ?, ?)");
-
-    // Hash the password before storing it
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-    // Execute the prepared statement
-    $stmt->execute([$username, $hashedPassword, $alias]);
-
-    // Redirect to login page after successful registration
-    header("Location: km_login.php");
+// Already logged in? Go straight to the dashboard
+if (isset($_SESSION['user_id'])) {
+    header('Location: km_dashboard.php');
     exit();
+}
+
+const USERNAME_PATTERN    = '/^[A-Za-z0-9_.-]{3,32}$/';
+const PASSWORD_MIN_LENGTH = 8;
+const PASSWORD_MAX_BYTES  = 72;     // bcrypt ignores anything after 72 bytes
+
+$errors   = [];
+$username = '';
+$alias    = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = post_string('username');
+    $password = post_string('password', false);
+    $alias    = post_string('alias');
+
+    // Server-side validation (the browser checks are only a convenience)
+    if (!csrf_verify()) {
+        $errors[] = 'Your session has expired. Please try again.';
+    }
+    if (!preg_match(USERNAME_PATTERN, $username)) {
+        $errors[] = 'Username must be 3-32 characters: letters, numbers, dot, dash or underscore.';
+    }
+    if (strlen($password) < PASSWORD_MIN_LENGTH) {
+        $errors[] = 'Password must be at least ' . PASSWORD_MIN_LENGTH . ' characters long.';
+    } elseif (strlen($password) > PASSWORD_MAX_BYTES) {
+        $errors[] = 'Password must be at most ' . PASSWORD_MAX_BYTES . ' bytes long.';
+    }
+    if (!preg_match('/^[^\p{C}]{1,50}$/u', $alias)) {
+        $errors[] = 'Alias must be 1-50 characters long.';
+    }
+
+    if (!$errors) {
+        // Raw values are stored: prepared statements prevent SQL injection,
+        // and every value is escaped with e() when it is printed.
+        $stmt = $pdo->prepare('INSERT INTO km_users (user, pass, alias) VALUES (?, ?, ?)');
+
+        try {
+            $stmt->execute([$username, password_hash($password, PASSWORD_DEFAULT), $alias]);
+
+            header('Location: km_login.php?registered=1');
+            exit();
+        } catch (PDOException $e) {
+            // 1062 = duplicate entry on the UNIQUE username index
+            if (($e->errorInfo[1] ?? null) !== 1062) {
+                throw $e;
+            }
+            $errors[] = 'That username is already taken. Please choose another one.';
+        }
+    }
 }
 ?>
 
@@ -47,18 +83,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
                         </div>
                         <h2 class="card-title">Registration</h2>
-                        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                        <?php if ($errors): ?>
+                            <div class="alert alert-danger text-left" role="alert">
+                                <ul class="mb-0">
+                                    <?php foreach ($errors as $error): ?>
+                                        <li><?= e($error) ?></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        <?php endif; ?>
+                        <form method="post" action="">
+                            <?= csrf_field() ?>
                             <div class="form-group">
                                 <label for="username">Username:</label>
-                                <input type="text" class="form-control" name="username" required>
+                                <input type="text" class="form-control" id="username" name="username"
+                                       value="<?= e($username) ?>" autocomplete="username"
+                                       minlength="3" maxlength="32" pattern="[A-Za-z0-9_.\-]+" required autofocus>
                             </div>
                             <div class="form-group">
                                 <label for="password">Password:</label>
-                                <input type="password" class="form-control" name="password" required>
+                                <input type="password" class="form-control" id="password" name="password"
+                                       autocomplete="new-password" minlength="8" maxlength="72" required>
                             </div>
                             <div class="form-group">
                                 <label for="alias">Alias:</label>
-                                <input type="text" class="form-control" name="alias" required>
+                                <input type="text" class="form-control" id="alias" name="alias"
+                                       value="<?= e($alias) ?>" maxlength="50" required>
                             </div>
                             <button type="submit" class="btn btn-primary">Register</button>
                         </form>
@@ -91,23 +141,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 eyePupil.style.transform = `translate(-50%, -50%) translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
             });
         });
-
-        //===================================
-        //                Empty fields alerts
-        function validateForm() {
-            var username = document.forms[0]["username"].value;
-            var password = document.forms[0]["password"].value;
-            var alias = document.forms[0]["alias"].value;
-
-            // Your validation logic goes here
-            if (username === "" || password === "" || alias === "") {
-                alert("Please fill all fields.");
-                return false;
-            }
-            // Additional validation logic can be added as needed
-
-            return true; // Submit the form
-        }
     </script>
 </body>
 </html>

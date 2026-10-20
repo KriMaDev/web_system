@@ -65,12 +65,12 @@ require __DIR__ . '/partials/header.php';
 
             <div class="row g-4">
                 <?php foreach ($tools as $tool): ?>
-                    <div class="col-md-6 col-xl-4">
+                    <div class="col-md-6">
                         <a href="<?= e($tool['href']) ?>" class="card tool-card h-100 text-decoration-none">
                             <div class="card-body d-flex flex-column">
                                 <div class="d-flex justify-content-between align-items-start mb-3">
                                     <span class="tool-icon"><i class="bi <?= e($tool['icon']) ?>"></i></span>
-                                    <span class="badge rounded-pill text-bg-light border"><?= e($tool['tech']) ?></span>
+                                    <span class="badge rounded-pill tech-badge"><?= e($tool['tech']) ?></span>
                                 </div>
                                 <h2 class="h5 card-title"><?= e($tool['title']) ?></h2>
                                 <p class="card-text text-body-secondary"><?= e($tool['text']) ?></p>

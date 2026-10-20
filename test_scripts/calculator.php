@@ -6,11 +6,11 @@ start_secure_session();
 
 // [key sent to the calculator, button label, Bootstrap button style]
 $keys = [
-    ['(', '(', 'outline-secondary'], [')', ')', 'outline-secondary'], ['C', 'C', 'outline-danger'],    ['back', '⌫', 'outline-warning'],
-    ['7', '7', 'outline-secondary'], ['8', '8', 'outline-secondary'], ['9', '9', 'outline-secondary'], ['/', '÷', 'primary'],
-    ['4', '4', 'outline-secondary'], ['5', '5', 'outline-secondary'], ['6', '6', 'outline-secondary'], ['*', '×', 'primary'],
-    ['1', '1', 'outline-secondary'], ['2', '2', 'outline-secondary'], ['3', '3', 'outline-secondary'], ['-', '−', 'primary'],
-    ['0', '0', 'outline-secondary'], ['.', '.', 'outline-secondary'], ['=', '=', 'success'],           ['+', '+', 'primary'],
+    ['(', '(', 'calc'], [')', ')', 'calc'], ['C', 'C', 'outline-danger'],    ['back', '⌫', 'outline-warning'],
+    ['7', '7', 'calc'], ['8', '8', 'calc'], ['9', '9', 'calc'], ['/', '÷', 'primary'],
+    ['4', '4', 'calc'], ['5', '5', 'calc'], ['6', '6', 'calc'], ['*', '×', 'primary'],
+    ['1', '1', 'calc'], ['2', '2', 'calc'], ['3', '3', 'calc'], ['-', '−', 'primary'],
+    ['0', '0', 'calc'], ['.', '.', 'calc'], ['=', '=', 'success'],           ['+', '+', 'primary'],
 ];
 
 $pageTitle   = 'Calculator';

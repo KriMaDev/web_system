@@ -1,12 +1,44 @@
 /* styles.css */
 
-/* ===== LAYOUT ===== */
-body {
-    background-color: var(--bs-tertiary-bg);
+/* ===== THEME TOKENS ===== */
+:root,
+[data-bs-theme="light"] {
+    --app-bg:          radial-gradient(circle at 15% 0%, rgba(99, 102, 241, 0.16), transparent 40%),
+                       radial-gradient(circle at 85% 100%, rgba(14, 165, 233, 0.14), transparent 45%),
+                       #f5f7fb;
+    --app-surface:     rgba(255, 255, 255, 0.78);
+    --app-card-border: rgba(15, 23, 42, 0.08);
+    --app-shadow:      0 0.5rem 1.5rem rgba(15, 23, 42, 0.08);
+    --app-shadow-lift: 0 1rem 2rem rgba(15, 23, 42, 0.14);
 }
 
-.app-navbar {
-    background-color: var(--bs-body-bg);
+[data-bs-theme="dark"] {
+    --app-bg:          radial-gradient(circle at 15% 0%, rgba(99, 102, 241, 0.22), transparent 40%),
+                       radial-gradient(circle at 85% 100%, rgba(14, 165, 233, 0.16), transparent 45%),
+                       #0f1420;
+    --app-surface:     rgba(23, 28, 40, 0.78);
+    --app-card-border: rgba(255, 255, 255, 0.08);
+    --app-shadow:      0 0.5rem 1.5rem rgba(0, 0, 0, 0.35);
+    --app-shadow-lift: 0 1rem 2rem rgba(0, 0, 0, 0.5);
+}
+
+/* ===== LAYOUT ===== */
+body {
+    background: var(--app-bg) fixed;
+}
+
+.app-navbar,
+.app-footer {
+    background-color: var(--app-surface);
+    backdrop-filter: blur(10px);
+}
+
+.card {
+    background-color: var(--app-surface);
+    border: 1px solid var(--app-card-border);
+    border-radius: 1rem;
+    box-shadow: var(--app-shadow);
+    backdrop-filter: blur(10px);
 }
 
 /* Theme toggle: show the moon in light mode, the sun in dark mode */
@@ -21,12 +53,37 @@ body {
     text-decoration: none;
 }
 
+.back-link:hover {
+    text-decoration: underline;
+}
+
 /* ===== DASHBOARD ===== */
+.dashboard-hero .display-6 {
+    background: linear-gradient(90deg, var(--bs-primary), #0ea5e9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
 .tool-card {
-    border: 0;
-    border-radius: 1rem;
     color: inherit;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.tool-card:hover,
+.tool-card:focus-visible {
+    transform: translateY(-4px);
+    box-shadow: var(--app-shadow-lift);
+    border-color: rgba(var(--bs-primary-rgb), 0.45);
+}
+
+.tool-card:hover .bi-arrow-right {
+    transform: translateX(3px);
+}
+
+.tool-card .bi-arrow-right {
+    display: inline-block;
+    transition: transform 0.15s ease;
 }
 
 .tool-icon {
@@ -40,11 +97,12 @@ body {
     color: var(--bs-primary-text-emphasis);
 }
 
-.tool-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.35) !important;
+.tech-badge {
+    font-weight: 500;
+    background-color: var(--bs-secondary-bg);
+    color: var(--bs-secondary-color);
+    border: 1px solid var(--bs-border-color);
 }
-
 
 /* ===== LOGIN & REGISTER ===== */
 
@@ -63,6 +121,7 @@ body {
     border-radius: 90% 90% 70% 90%;
     overflow: hidden;
     display: inline-block;
+    box-shadow: inset 0 -6px 12px rgba(15, 23, 42, 0.12);
 }
 
 .pupil {
@@ -80,18 +139,25 @@ body {
 /* Body */
 .auth-card {
     max-width: 440px;
-    border-radius: 2rem;
-    box-shadow: 0 0.5rem 1.5rem rgba(7, 11, 15, 0.5);
+    border-radius: 1.5rem;
 }
 
 .auth-card .card-body {
-    padding: 2rem;
+    padding: 2.25rem 2rem;
     text-align: center;
 }
 
 /* ===== TOOLS ===== */
+.tool-header h1 {
+    font-weight: 600;
+}
+
 .tool-panel {
     max-width: 640px;
+}
+
+.tool-panel .card-body {
+    padding: 1.5rem;
 }
 
 .calc-card {
@@ -108,4 +174,21 @@ body {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 0.5rem;
+}
+
+.calc-grid .btn {
+    font-weight: 600;
+}
+
+/* Digit keys: readable in both themes */
+.btn-calc {
+    --bs-btn-color: var(--bs-emphasis-color);
+    --bs-btn-bg: var(--bs-secondary-bg);
+    --bs-btn-border-color: var(--bs-border-color);
+    --bs-btn-hover-color: var(--bs-emphasis-color);
+    --bs-btn-hover-bg: var(--bs-tertiary-bg);
+    --bs-btn-hover-border-color: var(--bs-primary);
+    --bs-btn-active-color: var(--bs-emphasis-color);
+    --bs-btn-active-bg: var(--bs-tertiary-bg);
+    --bs-btn-active-border-color: var(--bs-primary);
 }

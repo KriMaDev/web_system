@@ -1,0 +1,12 @@
+# Disable directory listings (replaces the old empty index.html files)
+Options -Indexes
+
+DirectoryIndex index.php
+
+# Hide dotfiles and dot-directories such as .git and .env
+RedirectMatch 404 /\.(?!well-known/)
+
+# Hide project files that are not meant to be served
+<FilesMatch "(?i)^(config(\.example)?\.php|km_conn\.php|km_func\.php|Dockerfile|docker-compose\.ya?ml|README\.md)$">
+    Require all denied
+</FilesMatch>

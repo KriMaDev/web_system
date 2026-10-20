@@ -1,0 +1,14 @@
+.git
+.gitignore
+.dockerignore
+.env
+.env.*
+config.php
+Dockerfile
+docker-compose.yml
+README.md
+helpers/database/
+docs/
+.vscode/
+.idea/
+*.log

@@ -1,64 +1,98 @@
 <?php
-session_start();
+require_once __DIR__ . '/km_func.php';
+
+send_security_headers();
+start_secure_session();
 
 // Check if the user is not logged in, redirect to login page
-if (!isset($_SESSION["user_id"])) {
-    header("Location: km_login.php");
+if (!isset($_SESSION['user_id'])) {
+    header('Location: km_login.php');
     exit();
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Perform any additional logout actions if needed
-    // ...
+// Logout (POST only, CSRF-protected)
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!csrf_verify()) {
+        header('Location: km_dashboard.php');
+        exit();
+    }
 
-    // Destroy the session and redirect to the login page
+    // Clear the session data, expire the cookie and destroy the session
+    $_SESSION = [];
+    $cookie   = session_get_cookie_params();
+    setcookie(session_name(), '', [
+        'expires'  => time() - 3600,
+        'path'     => $cookie['path'],
+        'domain'   => $cookie['domain'],
+        'secure'   => $cookie['secure'],
+        'httponly' => $cookie['httponly'],
+        'samesite' => $cookie['samesite'],
+    ]);
     session_destroy();
-    header("Location: km_login.php");
+
+    header('Location: km_login.php');
     exit();
 }
+
+$alias = $_SESSION['alias'] ?? '';
+
+// Tools shown on the dashboard: one card each
+$tools = [
+    [
+        'title' => 'Calculator',
+        'href'  => 'test_scripts/calculator.php',
+        'icon'  => 'bi-calculator',
+        'tech'  => 'JavaScript',
+        'text'  => 'Button and keyboard calculator that runs in the browser, with a small expression parser instead of eval().',
+    ],
+    [
+        'title' => 'Basic Calculator',
+        'href'  => 'test_scripts/basic_calculator.php',
+        'icon'  => 'bi-plus-slash-minus',
+        'tech'  => 'PHP',
+        'text'  => 'Form-based calculator processed on the server, with input validation and escaped output.',
+    ],
+    [
+        'title' => 'Slug Generator',
+        'href'  => 'test_scripts/slug_generator.php',
+        'icon'  => 'bi-link-45deg',
+        'tech'  => 'PHP',
+        'text'  => 'Turns Greek or English text into a clean URL/filename slug, with one-click copy.',
+    ],
+    [
+        'title' => 'Password Generator',
+        'href'  => 'test_scripts/password_generator.php',
+        'icon'  => 'bi-key',
+        'tech'  => 'JavaScript',
+        'text'  => 'Strong random passwords from the browser\'s cryptographic RNG, with a strength meter.',
+    ],
+];
+
+$pageTitle = 'Dashboard';
+require __DIR__ . '/partials/header.php';
 ?>
+        <div class="container py-5">
+            <header class="dashboard-hero mb-5">
+                <h1 class="display-6 fw-semibold mb-2">Welcome<?= $alias !== '' ? ', ' . e($alias) : '' ?></h1>
+                <p class="lead text-body-secondary mb-0">Pick a tool below to get started.</p>
+            </header>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css"> 
-    <title>Dashboard</title>
-</head>
-<body>
-    <div class="wholeDash">
-        <h2>Welcome to the Dashboard</h2>
-        <div id ="headerDash">
-            <pre>
-                Here you can find and use all of the available tools built in the system.
-                Remember that this page is still under development!
-                Thats why they might be a bit crappy...
-            </pre>
-        </div>
-        <div id="bodyDash">
-            <div id="mainDash">
-                <div id="mainHeadDash">
-                    <!-- Header menu to useful projects -->
-                    <a href="/test-rep/test_scripts/calculator.html">
-                        <h3>Calculator</h3>
-                    </a>
-                    <a href="/test-rep/test_scripts/basic_calculator.php">
-                        <h3>Basic Calculator</h3>
-                    </a> 
-                </div>
-                <div id="mainFirstDash"></div>
-                <div id="mainSecondDash"></div>
+            <div class="row g-4">
+                <?php foreach ($tools as $tool): ?>
+                    <div class="col-md-6">
+                        <a href="<?= e($tool['href']) ?>" class="card tool-card h-100 text-decoration-none">
+                            <div class="card-body d-flex flex-column">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <span class="tool-icon"><i class="bi <?= e($tool['icon']) ?>"></i></span>
+                                    <span class="badge rounded-pill tech-badge"><?= e($tool['tech']) ?></span>
+                                </div>
+                                <h2 class="h5 card-title"><?= e($tool['title']) ?></h2>
+                                <p class="card-text text-body-secondary"><?= e($tool['text']) ?></p>
+                                <span class="mt-auto fw-semibold text-primary">Open <i class="bi bi-arrow-right"></i></span>
+                            </div>
+                        </a>
+                    </div>
+                <?php endforeach; ?>
             </div>
-            <div id="navDash"></div>
         </div>
-        <div id="footerDash"></div>
-       
-
-        <!-- Logout Form -->
-        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-            <input type="submit" value="Logout">
-        </form>
-    </div>
-</body>
-</html>
+<?php require __DIR__ . '/partials/footer.php'; ?>

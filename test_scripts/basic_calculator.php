@@ -1,94 +1,94 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Calculator</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            color: white;
-            margin: 50px;
-            background-color: rgb(45, 45, 45);
-        }
+<?php
+require_once __DIR__ . '/../km_func.php';
 
-        form {
-            display: inline-block;
-            text-align: left;
-        }
+send_security_headers();
+start_secure_session();
 
-        input, select {
-            font-size: 16px;
-            padding: 10px;
-        }
+$operators = ['+' => 'Add (+)', '-' => 'Subtract (−)', '*' => 'Multiply (×)', '/' => 'Divide (÷)'];
 
-        button {
-            font-size: 16px;
-            padding: 10px 20px;
-            cursor: pointer;
-        }
+$num1     = '';
+$num2     = '';
+$operator = '+';
+$result   = null;
+$isError  = false;
 
-        #result {
-            margin-top: 20px;
-            font-size: 24px;
-        }
-    </style>
-</head>
-<body>
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['calculate'])) {
+    $num1     = post_string('num1');
+    $num2     = post_string('num2');
+    $operator = post_string('oper');
 
-    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-        <!-- Num1 user input -->
-        <label for="num1">Enter First Number : </label>
-        <input type="number" name="num1" required>
-        <!-- Operator user input -->
-        <label for="oper">Select Operator : </label>
-        <select name="oper" required>
-            <option value="+">+</option>
-            <option value="-">-</option>
-            <option value="*">*</option>
-            <option value="/">/</option>
-        </select>
-        <!-- Num2 user input -->
-        <label for="num2">Enter Second Number : </label>
-        <input type="number" name="num2" required>
-        <!-- Submit button -->
-        <button type="submit" name="calculate">Calculate</button>
-    </form>
-
-    <?php
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["calculate"])) {
-        $num1     = $_POST["num1"];
-        $num2     = $_POST["num2"];
-        $operator = $_POST["oper"];
+    if (!is_numeric($num1) || !is_numeric($num2)) {
+        $result = 'Please enter two valid numbers.';
+    } else {
+        $a = (float) $num1;
+        $b = (float) $num2;
 
         // Perform calculation
         switch ($operator) {
-            case "+":
-                $result = $num1 + $num2;
+            case '+':
+                $result = $a + $b;
                 break;
-            case "-":
-                $result = $num1 - $num2;
+            case '-':
+                $result = $a - $b;
                 break;
-            case "*":
-                $result = $num1 * $num2;
+            case '*':
+                $result = $a * $b;
                 break;
-            case "/":
-                if ($num2 != 0) {
-                    $result = $num1 / $num2;
-                } else {
-                    $result = "Cannot divide by zero!";
-                }
+            case '/':
+                $result = ($b != 0) ? $a / $b : 'Cannot divide by zero!';
                 break;
             default:
-                $result = "Invalid operator";
+                $result = 'Invalid operator';
                 break;
         }
-
-        echo '<div id="result">Result: ' . $result . '</div>';
     }
-    ?>
-    
-    
-</body>
-</html>
+    $isError = is_string($result);
+}
+
+$pageTitle = 'Basic Calculator';
+$assetBase = '../';
+require __DIR__ . '/../partials/header.php';
+?>
+        <div class="container py-5">
+            <a href="../km_dashboard.php" class="back-link"><i class="bi bi-arrow-left me-1"></i>Back to dashboard</a>
+
+            <header class="tool-header text-center mb-4">
+                <h1 class="h3"><i class="bi bi-plus-slash-minus text-primary me-2"></i>Basic Calculator</h1>
+                <p class="text-body-secondary mb-0">The calculation runs on the server in PHP.</p>
+            </header>
+
+            <div class="card tool-panel mx-auto">
+                <div class="card-body">
+                    <form method="post" action="" class="row g-3 align-items-end">
+                        <div class="col-sm-4">
+                            <label for="num1" class="form-label">First number</label>
+                            <input type="number" step="any" class="form-control" id="num1" name="num1" value="<?= e($num1) ?>" required>
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="oper" class="form-label">Operator</label>
+                            <select class="form-select" id="oper" name="oper" required>
+                                <?php foreach ($operators as $op => $label): ?>
+                                    <option value="<?= e($op) ?>"<?= $op === $operator ? ' selected' : '' ?>><?= e($label) ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="num2" class="form-label">Second number</label>
+                            <input type="number" step="any" class="form-control" id="num2" name="num2" value="<?= e($num2) ?>" required>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" name="calculate" class="btn btn-primary w-100">
+                                <i class="bi bi-calculator me-1"></i>Calculate
+                            </button>
+                        </div>
+                    </form>
+
+                    <?php if ($result !== null): ?>
+                        <div id="result" class="alert <?= $isError ? 'alert-warning' : 'alert-success' ?> mt-4 mb-0 fs-5 text-center" role="status">
+                            Result: <strong><?= e((string) $result) ?></strong>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+<?php require __DIR__ . '/../partials/footer.php'; ?>

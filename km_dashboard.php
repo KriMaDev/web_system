@@ -59,6 +59,13 @@ $tools = [
         'tech'  => 'PHP',
         'text'  => 'Turns Greek or English text into a clean URL/filename slug, with one-click copy.',
     ],
+    [
+        'title' => 'Password Generator',
+        'href'  => 'test_scripts/password_generator.php',
+        'icon'  => 'bi-key',
+        'tech'  => 'JavaScript',
+        'text'  => 'Strong random passwords from the browser\'s cryptographic RNG, with a strength meter.',
+    ],
 ];
 
 $pageTitle = 'Dashboard';

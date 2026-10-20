@@ -52,6 +52,13 @@ $tools = [
         'tech'  => 'PHP',
         'text'  => 'Form-based calculator processed on the server, with input validation and escaped output.',
     ],
+    [
+        'title' => 'Slug Generator',
+        'href'  => 'test_scripts/slug_generator.php',
+        'icon'  => 'bi-link-45deg',
+        'tech'  => 'PHP',
+        'text'  => 'Turns Greek or English text into a clean URL/filename slug, with one-click copy.',
+    ],
 ];
 
 $pageTitle = 'Dashboard';

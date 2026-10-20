@@ -24,6 +24,7 @@ $pageScripts = $pageScripts ?? [];
             </a>
         </div>
     </footer>
+    <script src="<?= e($assetBase) ?>assets/js/app.js"></script>
     <?php foreach ($pageScripts as $script): ?>
         <script src="<?= e($assetBase . $script) ?>"></script>
     <?php endforeach; ?>

@@ -38,9 +38,7 @@ CREATE TABLE `km_users` (
 -- Dumping data for table `km_users`
 --
 
-INSERT INTO `km_users` (`id`, `user`, `pass`, `alias`) VALUES
-(1, 'admin', '$2y$10$YDSQjW.RufeTV.mrngqAzeHzb05UeG.QV0fOYAXMcnsBjPGsyPMx2', 'Administrator'),
-(2, 'user01', '$2y$10$D/1CKVBoz3WHivMJ9jPLQufhrWxMteXQRp6phCSXu2HkN3l5v7cWS', 'KM');
+-- No default accounts are shipped. Create a user via km_register.php after importing.
 
 --
 -- Indexes for dumped tables

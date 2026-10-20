@@ -59,7 +59,8 @@ $notice = isset($_GET['registered']) ? 'Account created. You can now log in.' : 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- Your additional styles -->
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -67,7 +68,7 @@ $notice = isset($_GET['registered']) ? 'Account created. You can now log in.' : 
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <div class="card">
+                <div class="card auth-card">
                     <div class="card-body">
                         <div class="eye-container">
                             <div class="eye">
@@ -83,13 +84,13 @@ $notice = isset($_GET['registered']) ? 'Account created. You can now log in.' : 
                         <?php endif; ?>
                         <form method="post" action="">
                             <?= csrf_field() ?>
-                            <div class="form-group">
-                                <label for="username">Username:</label>
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username:</label>
                                 <input type="text" class="form-control" id="username" name="username"
                                        value="<?= e($username) ?>" autocomplete="username" required autofocus>
                             </div>
-                            <div class="form-group">
-                                <label for="password">Password:</label>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password:</label>
                                 <input type="password" class="form-control" id="password" name="password"
                                        autocomplete="current-password" required>
                             </div>
@@ -101,11 +102,6 @@ $notice = isset($_GET['registered']) ? 'Account created. You can now log in.' : 
             </div>
         </div>
     </div>
-    <!-- Bootstrap JS and other JavaScript files can be included here -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- Your additional JavaScript files can be included here -->
     <script>
         //===================================
         //                       Eye controls

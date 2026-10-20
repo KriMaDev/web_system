@@ -75,9 +75,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['calculate'])) {
             margin-top: 20px;
             font-size: 24px;
         }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: #9ecbff;
+        }
     </style>
 </head>
 <body>
+    <a href="../km_dashboard.php" class="back-link">&larr; Back to dashboard</a>
+    <br>
 
     <form method="post" action="">
         <!-- Num1 user input -->

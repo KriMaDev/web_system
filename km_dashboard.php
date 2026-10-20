@@ -33,50 +33,70 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Location: km_login.php');
     exit();
 }
-?>
 
+$alias = $_SESSION['alias'] ?? '';
+?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css"> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="wholeDash">
-        <h2>Welcome to the Dashboard</h2>
-        <div id ="headerDash">
-            <pre>
-                Here you can find and use all of the available tools built in the system.
-                Remember that this page is still under development!
-                Thats why they might be a bit crappy...
-            </pre>
+    <nav class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <span class="navbar-brand fw-semibold">Web System</span>
+            <!-- Logout Form -->
+            <form method="post" action="" class="m-0">
+                <?= csrf_field() ?>
+                <button type="submit" class="btn btn-outline-light btn-sm">Logout</button>
+            </form>
         </div>
-        <div id="bodyDash">
-            <div id="mainDash">
-                <div id="mainHeadDash">
-                    <!-- Header menu to useful projects -->
-                    <a href="/test-rep/test_scripts/calculator.html">
-                        <h3>Calculator</h3>
-                    </a>
-                    <a href="/test-rep/test_scripts/basic_calculator.php">
-                        <h3>Basic Calculator</h3>
-                    </a> 
-                </div>
-                <div id="mainFirstDash"></div>
-                <div id="mainSecondDash"></div>
-            </div>
-            <div id="navDash"></div>
-        </div>
-        <div id="footerDash"></div>
-       
+    </nav>
 
-        <!-- Logout Form -->
-        <form method="post" action="">
-            <?= csrf_field() ?>
-            <input type="submit" value="Logout">
-        </form>
-    </div>
+    <main class="container py-5">
+        <header class="mb-4 text-light">
+            <h1 class="h2">Welcome<?= $alias !== '' ? ', ' . e($alias) : '' ?></h1>
+            <p class="text-white-50 mb-0">Pick a tool below to get started.</p>
+        </header>
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card tool-card h-100 shadow">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h2 class="h5 card-title mb-0">Calculator</h2>
+                            <span class="badge text-bg-warning">JavaScript</span>
+                        </div>
+                        <p class="card-text text-body-secondary">
+                            Button-based calculator that runs in the browser. Handles parentheses and
+                            operator precedence with a small expression parser instead of <code>eval()</code>.
+                        </p>
+                        <a href="test_scripts/calculator.html" class="btn btn-primary mt-auto align-self-start">Open Calculator</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card tool-card h-100 shadow">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h2 class="h5 card-title mb-0">Basic Calculator</h2>
+                            <span class="badge text-bg-info">PHP</span>
+                        </div>
+                        <p class="card-text text-body-secondary">
+                            Form-based calculator processed on the server, with input validation
+                            and escaped output.
+                        </p>
+                        <a href="test_scripts/basic_calculator.php" class="btn btn-primary mt-auto align-self-start">Open Basic Calculator</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 </body>
 </html>

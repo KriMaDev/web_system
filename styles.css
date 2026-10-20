@@ -4,9 +4,15 @@ body {
 }
 
 /* ===== DASHBOARD ===== */
-.wholeDash {
-    display: grid;
-    justify-items: center;
+.tool-card {
+    border: 0;
+    border-radius: 1rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tool-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.35) !important;
 }
 
 
@@ -42,13 +48,14 @@ body {
 }
 
 /* Body */
-.card-body {
-    text-align: center;
+.auth-card {
+    border-radius: 2rem;
+    box-shadow: 0 0.5rem 1.5rem rgba(7, 11, 15, 0.5);
 }
 
-.card {
-    border-radius: 17%;
-    box-shadow: #070b0f;
+.auth-card .card-body {
+    padding: 2rem;
+    text-align: center;
 }
 
 /* ===== SCRIPTS ===== */

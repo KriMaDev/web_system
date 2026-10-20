@@ -1,11 +1,12 @@
 <?php
 //========================================================================================
 //  DATABASE CONNECTION
-//  Settings live in config.php (git-ignored). If it doesn't exist, the committed
-//  config.example.php is used, which reads everything from environment variables.
+//  Settings come from app_config(): config.php (git-ignored) if it exists, otherwise
+//  the committed config.example.php, which reads everything from environment variables.
 //========================================================================================
-    $config = require (is_file(__DIR__ . '/config.php') ? __DIR__ . '/config.php' : __DIR__ . '/config.example.php');
-    $db     = $config['db'];
+    require_once __DIR__ . '/km_func.php';
+
+    $db = app_config()['db'];
 
     try {
         $pdo = new PDO(

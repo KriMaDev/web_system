@@ -6,6 +6,15 @@
 //========================================================================================
     require_once __DIR__ . '/km_func.php';
 
+    // Any uncaught error (e.g. a failed query) is logged, never shown to the visitor
+    set_exception_handler(function (Throwable $e) {
+        error_log('Uncaught ' . get_class($e) . ': ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine());
+        if (!headers_sent()) {
+            http_response_code(500);
+        }
+        echo 'Something went wrong. Please try again later.';
+    });
+
     $db = app_config()['db'];
 
     try {
